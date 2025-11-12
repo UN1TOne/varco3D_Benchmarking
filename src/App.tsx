@@ -1,11 +1,29 @@
-// src/App.tsx
 import { useRef } from "react";
 import "./index.css";
+
+import { Routes, Route } from "react-router-dom";
+import Header from "./Header";
+import FloatingScrollHint from "./FloatingScrollHint";
 import { Scene } from "./Scene";
 import { useParallaxDom } from "./useParallaxDom";
 import { MarqueeRow, MarqueeSection } from "./Marquee";
 
-export default function App() {
+function HeroSubtitle() {
+  return <p className="subtitle">Beyond Generation to Editing</p>;
+}
+function HeroCTA() {
+  return (
+    <button
+      className="cta-btn"
+      onClick={() => (location.href = "/start")}
+      aria-label="무료로 시작하기"
+    >
+      무료로 시작하기
+    </button>
+  );
+}
+
+function Home() {
   const behindRef = useRef<HTMLDivElement>(null);
   const behindBlurRef = useRef<HTMLDivElement>(null);
   const frontRef = useRef<HTMLDivElement>(null);
@@ -38,46 +56,33 @@ export default function App() {
   ];
 
   return (
-    <>
-      {/* <div className="headline-behind">
-        <div id="text-behind" ref={behindRef}>
-          VARCO<br />3D
-        </div>
-        <div id="text-behind-blur" ref={behindBlurRef}>
-          VARCO<br />3D
-        </div>
-      </div>
-      <div ref={canvasWrapRef} className="canvas-container">
-        <Scene />
-      </div>
-
-      <div className="headline-front">
-        <div id="text-front" ref={frontRef}>
-          VARCO<br />3D
-        </div>
-      </div>
-
-      <div className="hero-spacer" />
-
-      <MarqueeSection title="Featured models">
-        <MarqueeRow items={row1} speed={48} gap={28} height={260} radius={18} />
-        <MarqueeRow items={row2} speed={36} gap={28} height={260} radius={18} reverse />
-      </MarqueeSection>
-
-      <div style={{ height: "60vh" }} /> */}
-
+    <main>
       <section className="hero">
         <div className="headline-behind">
-          <div id="text-behind" ref={behindRef}>VARCO 3D</div>
-          <div id="text-behind-blur" ref={behindBlurRef}>VARCO 3D</div>
+          <div id="text-behind" ref={behindRef}>
+            VARCO 3D
+          </div>
+          <div id="text-behind-blur" ref={behindBlurRef}>
+            VARCO 3D
+          </div>
         </div>
 
         <div ref={canvasWrapRef} className="canvas-container">
           <Scene />
+          <FloatingScrollHint />
         </div>
 
         <div className="headline-front">
-          <div id="text-front" ref={frontRef}>VARCO 3D</div>
+          <div id="text-front" ref={frontRef}>
+            VARCO 3D
+          </div>
+        </div>
+
+        <div className="hero-ui hero-ui--top">
+          <HeroSubtitle />
+        </div>
+        <div className="hero-ui hero-ui--bottom">
+          <HeroCTA />
         </div>
       </section>
 
@@ -85,6 +90,30 @@ export default function App() {
         <MarqueeRow items={row1} speed={48} gap={28} height={260} radius={18} />
         <MarqueeRow items={row2} speed={36} gap={28} height={260} radius={18} reverse />
       </MarqueeSection>
+    </main>
+  );
+}
+
+function StartPage() {
+  return (
+    <main style={{ minHeight: "100vh", padding: "80px 24px", color: "#fff" }}>
+      <h1 style={{ margin: 0, fontSize: 42, fontWeight: 800 }}>시작하기</h1>
+      <p style={{ opacity: 0.8, marginTop: 12 }}>
+        온보딩/업로드/생성 UI를 여기에 배치하세요.
+      </p>
+    </main>
+  );
+}
+
+export default function App() {
+  return (
+    <>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/start" element={<StartPage />} />
+        <Route path="*" element={<Home />} />
+      </Routes>
     </>
   );
 }
