@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 
 export default function FloatingScrollHint({
     containerSelector = ".canvas-container",
-    lag = 0.25,
+    lag = 0.15,
 }: { containerSelector?: string; lag?: number }) {
     const boxRef = useRef<HTMLDivElement | null>(null);
     const [visible, setVisible] = useState(false);

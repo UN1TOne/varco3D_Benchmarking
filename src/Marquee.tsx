@@ -6,8 +6,8 @@ type RowProps = {
   speed?: number;     // px/s
   reverse?: boolean;  // 역방향
   gap?: number;       // px
-  height?: number;    // 카드 높이(px)
-  radius?: number;    // 모서리(px)
+  height?: number;    // 카드 높이
+  radius?: number;    // 모서리
 };
 
 export function MarqueeRow({

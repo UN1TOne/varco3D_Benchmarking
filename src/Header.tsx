@@ -4,7 +4,7 @@ export default function Header() {
     return (
         <header className="site-header" role="banner">
             <div className="site-row">
-                {/* Left: Brand */}
+                {/* Left: Logo */}
                 <Link className="brand" to="/">
                     <span className="logo-gem" aria-hidden="true">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -23,7 +23,7 @@ export default function Header() {
                 </Link>
 
                 <nav className="nav">
-                    <Link className="btn-primary" to="/login">로그인</Link>
+                    <Link className="btn-primary" to="/login">Sign In</Link>
                     <div className="icon-btn divider" aria-label="Divider"></div>
                     {/* Language */}
                     <button className="icon-btn flat" aria-label="Language">
@@ -62,13 +62,6 @@ export default function Header() {
                             )}
                         </svg>
                     </button>
-
-                    {/* Hamburger */}
-                    {/* <button className="icon-btn flat" aria-label="Menu">
-                        <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-                            <path d="M3 6h16M3 11h16M3 16h16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                        </svg>
-                    </button> */}
                 </nav>
             </div>
         </header>

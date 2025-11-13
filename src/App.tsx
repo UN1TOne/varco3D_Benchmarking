@@ -16,9 +16,9 @@ function HeroCTA() {
     <button
       className="cta-btn"
       onClick={() => (location.href = "/start")}
-      aria-label="무료로 시작하기"
+      aria-label="start"
     >
-      무료로 시작하기
+      Get started - It's free
     </button>
   );
 }
@@ -86,7 +86,7 @@ function Home() {
         </div>
       </section>
 
-      <MarqueeSection title="Featured models">
+      <MarqueeSection title="Featured Projects">
         <MarqueeRow items={row1} speed={48} gap={28} height={260} radius={18} />
         <MarqueeRow items={row2} speed={36} gap={28} height={260} radius={18} reverse />
       </MarqueeSection>
@@ -97,9 +97,9 @@ function Home() {
 function StartPage() {
   return (
     <main style={{ minHeight: "100vh", padding: "80px 24px", color: "#fff" }}>
-      <h1 style={{ margin: 0, fontSize: 42, fontWeight: 800 }}>시작하기</h1>
+      <h1 style={{ margin: 0, fontSize: 42, fontWeight: 800 }}>Let's Get Started</h1>
       <p style={{ opacity: 0.8, marginTop: 12 }}>
-        온보딩/업로드/생성 UI를 여기에 배치하세요.
+        sample / test / temp
       </p>
     </main>
   );
