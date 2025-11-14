@@ -7,6 +7,8 @@ import FloatingScrollHint from "./FloatingScrollHint";
 import { Scene } from "./Scene";
 import { useParallaxDom } from "./useParallaxDom";
 import { MarqueeRow, MarqueeSection } from "./Marquee";
+import { StartScene } from "./StartScene";
+import StartPage from "./StartPage";
 
 function HeroSubtitle() {
   return <p className="subtitle">Beyond Generation to Editing</p>;
@@ -94,16 +96,31 @@ function Home() {
   );
 }
 
-function StartPage() {
-  return (
-    <main style={{ minHeight: "100vh", padding: "80px 24px", color: "#fff" }}>
-      <h1 style={{ margin: 0, fontSize: 42, fontWeight: 800 }}>Let's Get Started</h1>
-      <p style={{ opacity: 0.8, marginTop: 12 }}>
-        sample / test / temp
-      </p>
-    </main>
-  );
-}
+// function StartPage() {
+//   return (
+//     <main style={{ minHeight: "100vh", color: "#fff" }}>
+//       <div
+//         style={{
+//           display: "grid",
+//           gridTemplateRows: "auto 1fr",
+//           height: "calc(100vh - var(--header-h))",
+//         }}
+//       >
+//         <section style={{ padding: "20px 24px 0" }}>
+//           <h1 style={{ margin: 0, fontSize: 32, fontWeight: 800 }}>
+//             Explore the Hamburger
+//           </h1>
+//           <p style={{ opacity: 0.8, marginTop: 8, fontSize: 14 }}>
+//             Drag to orbit · Scroll to zoom
+//           </p>
+//         </section>
+
+//         <StartScene />
+//       </div>
+//     </main>
+//   );
+// }
+
 
 export default function App() {
   return (
