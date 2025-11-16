@@ -1,18 +1,36 @@
 import * as THREE from "three";
 
-export function centerModelToOrigin(object: THREE.Object3D, desiredSize = 2.5) {
-  const box = new THREE.Box3().setFromObject(object);
-  const center = new THREE.Vector3();
-  const size = new THREE.Vector3();
+export function centerModelToOrigin(
+  root: THREE.Object3D,
+  targetHeight = 2.5,
+  gridY = 0
+) {
+  const box = new THREE.Box3().setFromObject(root);
 
-  box.getCenter(center);
+  if (!isFinite(box.min.x)) return;
+
+  const size = new THREE.Vector3();
   box.getSize(size);
 
-  object.position.sub(center);
+  // height to targetHeight
+  let scale = 1;
+  if (targetHeight > 0 && size.y > 0) {
+    scale = targetHeight / size.y;
+    root.scale.setScalar(scale);
 
-  const maxDim = Math.max(size.x, size.y, size.z) || 1;
-  const scale = desiredSize / maxDim;
-  object.scale.setScalar(scale);
+    // re-calculate
+    box.setFromObject(root);
+  }
 
-  return { center, size, scale };
+  const center = new THREE.Vector3();
+  box.getCenter(center);
+
+  // XZ to center, Y is on the gridY (min.y)
+  const offset = new THREE.Vector3(
+    -center.x,
+    gridY - box.min.y,
+    -center.z
+  );
+
+  root.position.add(offset);
 }

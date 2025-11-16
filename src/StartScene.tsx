@@ -11,16 +11,19 @@ function CenteredHamburger() {
 
     useEffect(() => {
         if (!groupRef.current) return;
+
         const g = groupRef.current;
         g.clear();
+
         const cloned = scene.clone(true);
         g.add(cloned);
 
-        centerModelToOrigin(g, 2.5);
+        centerModelToOrigin(g, 2.5, 0);
     }, [scene]);
 
     return <group ref={groupRef} />;
 }
+
 
 function StartRig() {
     const { camera, gl, scene } = useThree();
@@ -30,10 +33,16 @@ function StartRig() {
         camera.near = 0.1;
         camera.far = 100;
         camera.updateProjectionMatrix();
+
         camera.position.set(0, 1.2, 6);
         camera.lookAt(0, 0, 0);
 
         scene.background = new THREE.Color(0x272727);
+
+        const grid = new THREE.GridHelper(10, 11);
+        grid.material.opacity = 0.4;
+        grid.material.transparent = true;
+        scene.add(grid);
 
         gl.toneMapping = THREE.ACESFilmicToneMapping;
         gl.outputColorSpace = THREE.SRGBColorSpace;
