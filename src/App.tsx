@@ -7,7 +7,6 @@ import FloatingScrollHint from "./FloatingScrollHint";
 import { Scene } from "./Scene";
 import { useParallaxDom } from "./useParallaxDom";
 import { MarqueeRow, MarqueeSection } from "./Marquee";
-import { StartScene } from "./StartScene";
 import StartPage from "./StartPage";
 
 function HeroSubtitle() {
@@ -95,32 +94,6 @@ function Home() {
     </main>
   );
 }
-
-// function StartPage() {
-//   return (
-//     <main style={{ minHeight: "100vh", color: "#fff" }}>
-//       <div
-//         style={{
-//           display: "grid",
-//           gridTemplateRows: "auto 1fr",
-//           height: "calc(100vh - var(--header-h))",
-//         }}
-//       >
-//         <section style={{ padding: "20px 24px 0" }}>
-//           <h1 style={{ margin: 0, fontSize: 32, fontWeight: 800 }}>
-//             Explore the Hamburger
-//           </h1>
-//           <p style={{ opacity: 0.8, marginTop: 8, fontSize: 14 }}>
-//             Drag to orbit · Scroll to zoom
-//           </p>
-//         </section>
-
-//         <StartScene />
-//       </div>
-//     </main>
-//   );
-// }
-
 
 export default function App() {
   return (
