@@ -1,73 +1,153 @@
-# React + TypeScript + Vite
+# VARCO 3D --- R3F Demo Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a **benchmarking implementation of the VARCO 3D
+homepage**, rebuilt using:
 
-Currently, two official plugins are available:
+- **React Three Fiber (R3F)**
+- **TypeScript**
+- **Vite**
+- **Three.js**
+- **Custom shaders & postprocessing**
+- **Parallax UI / 3D-integrated interface**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 📌 Overview
 
-## React Compiler
+This repository demonstrates a **concept demo** of a VARCO‑style
+3D-driven landing page experience.\
+The focus is on recreating the feel of a modern WebGL‑powered portfolio
+site with smooth transitions, parallax motion, and a clean UI/UX.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Implemented Pages
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Page Description
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+**Landing Page (`/`)** 3D hero scene, VARCO-style typography, parallax
+DOM, floating scroll hint, marquee gallery.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+**Start Page Fullscreen model viewer (hamburger), orbit
+(`/start`)** controller, zoom, custom environment lighting,
+sidebar UI, history list, modal image preview.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+This is an early **demo build**, not a full service implementation.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
+
+## 🛠 Tech Stack
+
+### Core Libraries
+
+- **React 19**
+- **TypeScript**
+- **Vite**
+- **react-three-fiber (`@react-three/fiber`)**
+- **drei utilities (`@react-three/drei`)**
+- **postprocessing (`@react-three/postprocessing`)**
+- **Zustand (planned for future state control)**
+
+### Rendering
+
+- ACES tone mapping
+- HDR environment lighting
+- Custom Three.js orbit controller
+- Model switcher
+- Bloom postprocessing
+- R3F `<Canvas>` with high-DPI rendering
+
+---
+
+## 🎨 UI / UX Features
+
+### Landing Page
+
+- Large **VARCO-style headline typography**
+- Multi‑layer parallax:
+  - background text
+  - blur text
+  - outline text
+  - canvas movement
+- Floating "Scroll" cursor hint
+- Marquee gallery rows with hover pause
+- Blur/glow effects matching modern creative AI tools
+
+### Start Page
+
+- Fullscreen 3D model viewer
+- Orbit (drag), zoom (wheel), inertia
+- High-quality environment reflections
+- Sidebar with:
+  - Generation history
+  - Image preview modal
+  - Action rows (new, edit, remake)
+- Topbar with share button and scene actions
+
+---
+
+## 📁 Project Structure
+
+    src/
+    ├─ App.tsx
+    ├─ Header.tsx
+    ├─ Scene.tsx           # Landing page R3F scene
+    ├─ StartScene.tsx      # Start page R3F model viewer
+    ├─ StartPage.tsx
+    ├─ useParallaxDom.ts
+    ├─ FloatingScrollHint.tsx
+    ├─ Marquee/
+    │   ├─ MarqueeRow.tsx
+    │   └─ MarqueeSection.tsx
+    ├─ models/
+    ├─ images/
+    └─ index.css
+
+---
+
+## 🚀 Development
+
+### Install
+
+    yarn install
+
+### Start Dev Server
+
+    yarn dev
+
+### Build
+
+    yarn build
+
+### Preview
+
+    yarn preview
+
+---
+
+## 🔧 Deployment Note (Netlify)
+
+Netlify requires a redirect rule to make SPA routing work:
+
+Create `/public/_redirects`:
+
+    /*    /index.html   200
+
+This ensures `/start` loads correctly after deployment.
+
+---
+
+## 📄 License
+
+This project is for **educational and demo purposes only**.\
+Do not use VARCO 3D trademarks or assets commercially.
+
+---
+
+## ✨ Author
+
+Developed by **UNIT** -- BabylonJS & WebGL Specialist\
+
+---
