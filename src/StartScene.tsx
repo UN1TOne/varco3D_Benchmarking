@@ -74,7 +74,11 @@ export function StartScene() {
         <Canvas
             camera={{ fov: 45, position: [0, 1.2, 6] }}
             dpr={[1, 2]}
-            style={{ width: "100%", height: "100%" }}
+            style={{
+                width: "100%",
+                height: "100%",
+                touchAction: "none",
+            }}
         >
             <Environment files="/images/studio.hdr" background={false} />
             <StartRig />

@@ -5,8 +5,8 @@ export class ArcRotateController {
   dom: HTMLElement;
 
   target = new THREE.Vector3();
-  alpha = Math.PI * 0.5; // yaw
-  beta = Math.PI * 0.3;  // pitch
+  alpha = Math.PI * 0.5;
+  beta = Math.PI * 0.3;
   radius = 10;
 
   private currentAlpha = this.alpha;
@@ -18,6 +18,7 @@ export class ArcRotateController {
   private lastX = 0;
   private lastY = 0;
   private dragButton: number | null = null;
+  private activePointerId: number | null = null;
 
   private rafId: number | null = null;
 
@@ -27,19 +28,23 @@ export class ArcRotateController {
 
     this.applyCamera();
 
-    dom.addEventListener("mousedown", this.onDown);
-    dom.addEventListener("mousemove", this.onMove);
-    dom.addEventListener("mouseup", this.onUp);
-    dom.addEventListener("mouseleave", this.onUp);
-    dom.addEventListener("wheel", this.onWheel, { passive: true });
+    dom.addEventListener("pointerdown", this.onPointerDown);
+    dom.addEventListener("pointermove", this.onPointerMove);
+    dom.addEventListener("pointerup", this.onPointerUp);
+    dom.addEventListener("pointercancel", this.onPointerUp);
+    dom.addEventListener("pointerleave", this.onPointerUp);
+
+    dom.addEventListener("wheel", this.onWheel, { passive: false });
     dom.addEventListener("contextmenu", this.onContextMenu);
   }
 
   dispose() {
-    this.dom.removeEventListener("mousedown", this.onDown);
-    this.dom.removeEventListener("mousemove", this.onMove);
-    this.dom.removeEventListener("mouseup", this.onUp);
-    this.dom.removeEventListener("mouseleave", this.onUp);
+    this.dom.removeEventListener("pointerdown", this.onPointerDown);
+    this.dom.removeEventListener("pointermove", this.onPointerMove);
+    this.dom.removeEventListener("pointerup", this.onPointerUp);
+    this.dom.removeEventListener("pointercancel", this.onPointerUp);
+    this.dom.removeEventListener("pointerleave", this.onPointerUp);
+
     this.dom.removeEventListener("wheel", this.onWheel);
     this.dom.removeEventListener("contextmenu", this.onContextMenu);
 
@@ -53,15 +58,26 @@ export class ArcRotateController {
     e.preventDefault();
   };
 
-  private onDown = (e: MouseEvent) => {
+  private onPointerDown = (e: PointerEvent) => {
     this.dragging = true;
-    this.dragButton = e.button; // 0: left, 1: middle, 2: right
+    this.activePointerId = e.pointerId;
+
+    if (e.pointerType === "mouse") {
+      // (LeftClick=0, RightClick=2)
+      this.dragButton = e.button;
+    } else {
+      this.dragButton = 0;
+    }
+
     this.lastX = e.clientX;
     this.lastY = e.clientY;
+
+    this.dom.setPointerCapture(e.pointerId);
   };
 
-  private onMove = (e: MouseEvent) => {
+  private onPointerMove = (e: PointerEvent) => {
     if (!this.dragging) return;
+    if (this.activePointerId !== null && e.pointerId !== this.activePointerId) return;
 
     const dx = e.clientX - this.lastX;
     const dy = e.clientY - this.lastY;
@@ -75,12 +91,23 @@ export class ArcRotateController {
     }
   };
 
-  private onUp = () => {
+  private onPointerUp = (e: PointerEvent) => {
+    if (this.activePointerId !== null && e.pointerId !== this.activePointerId) return;
+
     this.dragging = false;
     this.dragButton = null;
+
+    try {
+      this.dom.releasePointerCapture(e.pointerId);
+    } catch {
+      // ignore
+    }
+
+    this.activePointerId = null;
   };
 
   private onWheel = (e: WheelEvent) => {
+    e.preventDefault();
     const s = Math.exp(e.deltaY * 0.0015);
     this.radius = THREE.MathUtils.clamp(this.radius * s, 1.2, 20);
     this.scheduleUpdate();
@@ -90,8 +117,6 @@ export class ArcRotateController {
     this.target.copy(v);
     this.scheduleUpdate();
   }
-
-  // ===== 내부 로직 =====
 
   private handleOrbit(dx: number, dy: number) {
     this.alpha += dx * 0.005;
@@ -150,7 +175,6 @@ export class ArcRotateController {
     this.currentAlpha = THREE.MathUtils.lerp(this.currentAlpha, this.alpha, ease);
     this.currentBeta = THREE.MathUtils.lerp(this.currentBeta, this.beta, ease);
     this.currentRadius = THREE.MathUtils.lerp(this.currentRadius, this.radius, ease);
-
     this.currentTarget.lerp(this.target, ease);
 
     this.applyCamera();
